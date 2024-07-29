@@ -1,17 +1,31 @@
 import React from 'react';
 
-const CurrentWeather = ({ currentWeather, todayForecast }) => (
-  currentWeather ? (
-    <div className='d-flex justify-content-between'>
+const CurrentWeather = ({ currentWeather }) => {
+  const formatTime = (timeString) => {
+    const date = new Date(timeString);
+    return date.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
+  const getDay = (timeString) => {
+    const date = new Date(timeString);
+    return date.toLocaleDateString('en-US', { weekday: 'long' });
+  };
+
+  return (
+    <div className='d-flex justify-content-between align-items-center'>
       <div>
         <p className="fs-2">{currentWeather.temp_c}°C</p>
-        <p className="fs-4 m-0">{currentWeather.condition.text}</p>
-        <p className="fs-4">Humidity: {currentWeather.humidity}%</p>
-        <p className="fs-4">Chance of Rain: {todayForecast.daily_chance_of_rain}%</p>
+        <p>
+          <span className='fw-bold fs-5'>{getDay(currentWeather.last_updated)} </span>
+          {formatTime(currentWeather.last_updated)}
+        </p>
       </div>
-      <img src={currentWeather.condition.icon} alt="Weather Icon" className='mw-100'/>
+      <img src={currentWeather.condition.icon} alt="Weather Icon" />
     </div>
-  ) : null
-);
+  );
+};
 
 export default CurrentWeather;

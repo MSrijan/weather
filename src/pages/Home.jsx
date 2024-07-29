@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { FaSearch } from 'react-icons/fa';
 import CurrentWeather from '../components/CurrentWeather';
 import HourlyWeather from '../components/HourlyWeather';
 import WeeklyWeather from '../components/WeeklyWeather';
+import AirCondition from '../components/AirCondition';
 
 const Home = () => {
   const [currentWeather, setCurrentWeather] = useState(null);
@@ -16,7 +18,7 @@ const Home = () => {
   const API_KEY = 'b7bbbd4816f34ed7beb81350242807';
 
   const fetchWeatherData = async (city) => {
-    const BASE_URL = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=7`;
+    const BASE_URL = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=7&aqi=yes`;
     try {
       const response = await fetch(BASE_URL);
       if (!response.ok) {
@@ -57,13 +59,18 @@ const Home = () => {
     <div className='container'>
       <h1 className="my-4">{city}</h1>
       <form className="mb-4" onSubmit={handleSearchSubmit}>
-        <input 
-          type="text" 
-          className="form-control" 
-          placeholder="Enter city name" 
-          value={searchCity} 
-          onChange={(e) => setSearchCity(e.target.value)} 
-        />
+        <div className="position-relative">
+          <input 
+            type="text" 
+            className="form-control pe-5"
+            placeholder="Enter city name" 
+            value={searchCity} 
+            onChange={(e) => setSearchCity(e.target.value)} 
+          />
+          <span className="position-absolute top-50 end-0 translate-middle-y pe-3">
+            <FaSearch />
+          </span>
+        </div>
       </form>
       {loading ? (
         <div className="text-center">
@@ -75,12 +82,15 @@ const Home = () => {
         </div>
       ) : (
         <>
-          <div className="d-flex flex-wrap">
+          <div className="d-flex flex-wrap justify-content-between">
             <div>
-              <CurrentWeather currentWeather={currentWeather} todayForecast={todayForecast} />
+              <CurrentWeather currentWeather={currentWeather} />
               <HourlyWeather hourlyForecast={hourlyForecast} />
+              <AirCondition currentWeather={currentWeather} todayForecast={todayForecast} />
             </div>
-            <WeeklyWeather forecast={forecast} />
+            <div>
+              <WeeklyWeather forecast={forecast} />
+            </div>
           </div>
         </>
       )}
