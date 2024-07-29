@@ -11,7 +11,7 @@ const WeeklyWeather = ({ forecast }) => {
       <h2 className="text-center my-4">7-Day Forecast</h2>
       {forecast.map((day, index) => (
         <div key={index} className="mb-2 mw-100">
-          <div className="border bg-white rounded p-2">
+          <div className="border bg-white rounded p-3">
             <div className="d-flex text-center align-items-center justify-content-between flex-wrap rounded-sm">
               <p className="fs-4">{getDayName(day.date)}</p>
               <img src={day.day.condition.icon} alt="" />

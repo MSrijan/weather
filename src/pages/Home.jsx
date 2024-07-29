@@ -18,7 +18,7 @@ const Home = () => {
   const API_KEY = 'b7bbbd4816f34ed7beb81350242807';
 
   const fetchWeatherData = async (city) => {
-    const BASE_URL = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=7&aqi=yes`;
+    const BASE_URL = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${city}&days=7&aqi=yes`;
     try {
       const response = await fetch(BASE_URL);
       if (!response.ok) {
